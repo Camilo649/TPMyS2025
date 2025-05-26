@@ -1,0 +1,28 @@
+PROYECTO DE MODELOS
+
+Notas:
+
+- Usar intrinsics(? pshufb para los rng?
+
+- LCG con a = 16807, c = 0, M = 2^31 − 1
+
+Teorema 3.2:
+
+K = M-1 sii a es raiz primitiva de M y M es primo.
+
+2^31 − 1 <-- Es un primo de Merssene
+
+Definición 3.3: Sea M un número natural. Se dice que a es una raíz primitiva de M si
+	(a^((M − 1) / p) NO es congruente a 1 mód (M)
+para cualquier factor primo p de M − 1.
+
+Segun PythonCHAD, la descomposición den primos de M es 2^31 - 2 = 2 * 3^2 * 7 * 11 * 31 * 151 * 331
+
+Y por lo visto en boludces.ipynb, a es raiz primitiva de M
+
+- XORSHIFT
+
+- Xoshiro
+
+
+
