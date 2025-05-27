@@ -20,6 +20,13 @@ Y por lo visto en boludces.ipynb, a es raíz primitiva de M
 
 PREGUNTAR:
 
+¿Cómo medir el error cuadrático medio?
+ECM Teórico vs ECM Simulado
+
 La estabilidad de los resultados en función de la dimensión y del tamaño de la muestra. ¿Estabilidad?
+Fijate como se comporta la media y la varianza a medida que vas cambiando la dimensión
+
+¿Están bien los rngs que elegimos? (más que nada me preocupan los xorshifts)
+Sipi, todo zarpado
 
 
