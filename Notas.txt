@@ -29,4 +29,6 @@ Fijate como se comporta la media y la varianza a medida que vas cambiando la dim
 ¿Están bien los rngs que elegimos? (más que nada me preocupan los xorshifts)
 Sipi, todo zarpado
 
+¿Caracteristicas Estadisticas de los generadores?
+Eficiencia, Periodo, Repetibilidad, Tests(Hiperplanos)
 
