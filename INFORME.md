@@ -1,4 +1,3 @@
-
 <div style="border: 3px solid #4A90E2; border-radius: 10px; padding: 20px; background-color: #f5f8fc; color: #000000; font-family: sans-serif;">
 
 <h1 style="color: #DAA520;">Comparación de Generadores Pseudoaleatorios mediante el Método de Monte Carlo</h1>
@@ -18,7 +17,7 @@
 <h2 style="color: #DAA520;">Resumen</h2>
 
 <p>
-Este informe analiza y compara el desempeño de distintos generadores de números pseudoaleatorios aplicados a la estimación de una integral definida mediante el método de Monte Carlo. Se utilizan generadores clásicos como <code>LCG</code> y variantes más modernas como <code>Xorshift</code> y <code>Xoshiro</code>. Se evalúan su eficiencia, precisión, distribución y varianza obtenida en las simulaciones.
+Este informe analiza y compara el desempeño de distintos generadores de números pseudoaleatorios aplicados a la estimación de una integral definida mediante el método de Monte Carlo. Se utilizan generadores clásicos como <code>LCG</code> y variantes más modernas como <code>Xorshift</code> y <code>Xoshiro</code>. Se evalúan su eficiencia, precisión, estabilidad y varianza obtenida en las simulaciones.
 </p>
 
 <hr>
@@ -27,25 +26,64 @@ Este informe analiza y compara el desempeño de distintos generadores de número
 
 <h3 style="color: #DAA520;">1.1 LCG (Linear Congruential Generator)</h3>
 <ul>
-<li><strong>Fórmula:</strong> Xₙ₊₁ = (a * Xₙ) mod m</li>
+<li><strong>Fórmula:</strong> Yₙ₊₁ = (a * Yₙ) mod m</li>
 <li><strong>Parámetros usados:</strong> a = 16807, m = 2³¹ - 1</li>
-<li><strong>Ventajas:</strong> Implementación sencilla, rápida.</li>
+<li><strong>Ventajas:</strong> Implementación sencilla, muy rápido.</li>
 <li><strong>Desventajas:</strong> Correlaciones a largo plazo, no adecuado para aplicaciones criptográficas.</li>
 </ul>
 
 <h3 style="color: #DAA520;">1.2 Xorshift (32, 64, 128 bits)</h3>
+
+- Utiliza operaciones XOR y desplazamientos bit a bit<sup><a href="#nota1">[1]</a></sup>.
+- **Xorshift32**  
+  - **Fórmula:**
+    $$
+    y = y \oplus (y \ll a);\quad
+    y = y \oplus (y \gg b);\quad
+    y = y \oplus (y \ll c)
+    $$  
+  - **Parámetros usados:** a = 13, b = 17, c = 5
+
+- **Xorshift64**  
+  - **Fórmula:**
+    $$
+    y = y \oplus (y \gg c);\quad 
+    y = y \oplus (y \ll b);\quad 
+    y = y \oplus (y \gg a)
+    $$  
+  - **Parámetros usados:** a = 1 b = 13, c = 45
+
+- **Xorshift128**  
+  - **Fórmula:**
+    $$
+    y = estado_0 + estado_1 \mod 2^{64}
+    $$  
+  - **Parámetros usados:** a = 23, b = 18, c = 5
 <ul>
-<li>Utiliza operaciones XOR y desplazamientos bit a bit.</li>
 <li><strong>Ventajas:</strong> Muy rápido, buena distribución estadística.</li>
 <li><strong>Desventajas:</strong> No es criptográficamente seguro.</li>
 </ul>
 
 <h3 style="color: #DAA520;">1.3 Xoshiro128++</h3>
 <ul>
-<li>Uno de los generadores modernos más robustos.</li>
-<li><strong>Ventajas:</strong> Buena calidad, velocidad, adecuada para simulaciones numéricas.</li>
+<li>Uno de los generadores modernos más robustos<sup><a href="#nota2">[2]</a></sup>.</li>
+
+<li><strong>Fórmula:</strong></li>
+
+$$
+y = \text{rotl}(estado_0 + estado_3, r) + estado_0
+$$  
+
+<li><strong>Parámetros usados:</strong> a = 9, b = 11, r = 7</li>
+
+<li><strong>Ventajas:</strong> Buena calidad, velocidad adecuada para simulaciones numéricas.</li>
 <li><strong>Desventajas:</strong> Complejidad levemente mayor.</li>
 </ul>
+
+<ol style="font-size: 0.9em; margin-left: 2em;">
+  <li id="nota1"> Las fórmulas y parámetros de los generadores xorshift32 y xorshift64 fueron elegidas de entre todas las posbiles que garantizan un periódo máximo según <a href="#ref1">Marsaglia (2003)</a>. Para el caso del generador xorshift128, nos basamos en la implementación de <a href="#ref2">Vigna (2017)</a>.</li>
+  <li id="nota2"> Nos guiamos de la implementación propuesta en <a href="#ref3">Blackman & Vignia(2021)</a>.</li>
+</ol>
 
 <hr>
 
@@ -211,5 +249,23 @@ Xoshiro128   | d=10 | N=1000000 | Estimación=0.053960 | Error=1.43e-05 | Varian
 <h2 style="color: #DAA520;">6. Código fuente</h2>
 
 <p>El código completo de simulación y generación de gráficos se incluye en el archivo <code>simulacion.ipynb</code> adjunto.</p>
+
+<hr>
+
+<h2 style="color: #DAA520;">7. Bibliografía</h2>
+<ol>
+  <li id="ref1">
+    Marsaglia, G. (2003). Xorshift RNGs. Journal of Statistical Software.
+    <a href="https://www.jstatsoft.org/article/view/v008i14" target="_blank">[Link]</a>
+  </li>
+  <li id="ref2">
+    Vigna, S. (2017). Further scramblings of Marsaglia’s xorshift generators. Journal of Computational and Applied Mathematics.
+    <a href="https://doi.org/10.1016/j.cam.2016.11.006" target="_blank">[Link]</a>
+<li id="ref3">
+  Blackman, D., & Vigna, S. (2021). <em>Scrambled Linear Pseudorandom Number Generators</em>. 
+  ACM Transactions on Mathematical Software. 
+  <a href="https://doi.org/10.1145/3460772" target="_blank">[Link]</a>
+</li>
+</ol>
 
 </div>
