@@ -32,5 +32,6 @@ Sipi, todo zarpado
 ¿Caracteristicas Estadisticas de los generadores?
 Eficiencia, Periodo, Repetibilidad, Tests(Hiperplanos)
 
-¿Estamos calculando bien la varianza y el ecm?
+¿Estamos calculando bien la varianza y el ecm? --> Patricia
+AHORA SI
 

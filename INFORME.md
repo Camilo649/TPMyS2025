@@ -47,7 +47,7 @@ Este informe analiza y compara el desempeño de distintos generadores de número
 Se desea estimar la siguiente integral múltiple sobre el hipercubo \( [0,1]^d \):
 
 \[
-I_d = \int_{[0,1]^d} e^{-\sum x_i^2} \, dx
+I_d = \int_{[0,1]^d} \prod_{i=1}^{d} e^{-x_i^2} \, dx
 \]
 
 Esta integral tiene una solución teórica conocida basada en el producto de funciones error:
@@ -141,10 +141,56 @@ $$
 <ul>
 <li><strong>Lenguaje usado:</strong> Python 3.12.3</li>
 <li><strong>Librerías:</strong> mumpy, matplotlib, math, time, ctypes, tempfile, subprocess, os, sympy, random, ipywidgets, mpl_toolkits, IPython</li>
-<li><strong>Muestras simuladas:</strong> N = 10⁴, 10⁵, 10⁶</li>
-<li><strong>Dimensiones simuladas:</strong> d = 2, 5, 10</li>
-<li><strong>Criterios de comparación:</strong> estimación de la integral, error absoluto, varianza de la muestra, error cuadrático medio de la muestra, tiempo de ejecución, distribución.</li>
-<li><strong>Tests adicionales:</strong> Test de los hiperplanos y algún otro test de aleatoriedad(TODO).</li>
+<li><strong>Simulación:</strong></li>
+
+Dado que el integrando es un producto de funciones que dependen **cada una de una sola variable** \( x_i \), la integral se puede reescribir como un **producto de integrales unidimensionales**:
+
+  $$
+  I_d = \int_{[0,1]^d} \prod_{i=1}^{d} e^{-x_i^2} \, dx
+  = \prod_{i=1}^d \left( \int_0^1 e^{-x_i^2} \, dx_i \right)
+  $$
+
+  Para estimar la integral, se hace uso del **método de Monte Carlo** que consiste en: generar \( N \) muestras \(\mathbf{x}^{(k)} = \big(x_1^{(k)}, x_2^{(k)}, \ldots, x_d^{(k)}\big), \quad \text{para } k = 1, 2, \ldots, N\) de forma uniforme, y evaluar en cada una de ellas la función:
+
+  $$
+  f(\mathbf{x}) = \prod_{i=1}^d e^{-x_i^2}
+  $$
+
+  Luego, la estimación de \( I_d \) es simplemente el promedio de estos valores:
+
+  $$
+  \hat{I}_d = \frac{1}{N} \sum_{k=1}^{N} f(\mathbf{x}^{(k)})
+  $$
+
+  En la implementación, esto se logra generando un valor aleatorio \( x_i \sim \mathcal{U}(0,1) \) para cada dimensión, y acumulando el producto \( \prod_{i=1}^{i-1} e^{-x_i^2} \). Esa operación corresponde al siguiente fragmento de código:
+
+  ```python
+  def f(rng, d):
+      prod = 1
+      for _ in range(d):
+          X = rng()
+          prod *= exp(-X**2)
+      return prod
+  ```
+
+  Cada llamada a \( f(rng, d) \) representa una muestra \( \mathbf{x}^{(k)} \) y su evaluación del integrando.
+
+  Finalmente, para evaluar la eficiencia de la estimación, se repite este proceso con diferentes cantidades de muestras:
+
+  - **Muestras simuladas:**  
+    \( N = 10^{4}, \quad 10^{5}, \quad 10^{6} \)
+
+  - **Dimensiones simuladas:**  
+    \( d = 2, \quad 5, \quad 10 \)
+
+  Y se calcula, para cada caso:
+
+  - El valor estimado \( \hat{I}_d \)
+  - El tiempo de ejecución
+  - La varianza muestral
+  - El error cuadrático medio respecto al valor exacto
+
+<li><strong>Tests adicionales:</strong> Eficiencia, Repetibilidad, Independencia y Uniformidad, Chi-cuadrado y Kolmogrow-Smirnov.</li>
 </ul>
 
 <hr>
@@ -154,7 +200,7 @@ $$
 <h3 style="color: #DAA520;">4.1 Semilla</h3>
 
 <p>
-Para obtener una semilla de buena calidad estadística, hacemos uso de la instrucción <a href="#ref4">RDSEED</a> la cual, dependiendo de la versión, genera un número aleatorio de 32 o 64 bits a partir del hardware. Suele ser bastante lenta ya que, además de recolectar entropía, realiza tests de autoverificación internos y puede incluso llegar a fallar si no hay suficiente entropía.
+Para obtener una semilla de buena calidad estadística, hacemos uso de la instrucción <a href="#ref4">RDSEED</a> la cual, dependiendo de la versión, genera un número <strong>aleatorio</strong> de 32 o 64 bits a partir del hardware. Suele ser bastante lenta ya que, además de recolectar entropía, realiza tests de autoverificación internos y puede incluso llegar a fallar si no hay suficiente entropía.
 </p>
 
 <p>
@@ -199,56 +245,7 @@ En lo que respecta a las simulaciones, utilizaremos las siguientes semillas obte
   </table>
 </figure>
 
-<h3 style="color: #DAA520;">4.2 Distribución Individual</h3>
-
-<p>
-Se generaron 10 millones de muestras para cada generador normalizado en el intervalo [0,1). También se utilizó como referencia el generador de números aleatorios en el intervalo [0,1) de la librería random de Python con una semilla fija de 42, el cual se implementa internamente con el algoritmo Mersenne Twister MT19937 y está ampliamente probado que tiene una alta calidad estadística.
-</p>
-
-<p><img src="Imagenes/Distribucion_Indivdual.png" alt="Distribución individual de los generadores" style="width:100%;"></p>
-
-<p>
-Como se observa en los histogramas, para un N grande, la distribución se aproxima a una uniforme en el intervalo (0,1), lo cual es lo que esperaríamos de un buen generador.
-</p>
-
-<h3 style="color: #DAA520;">4.3 Distribución de a Pares</h3>
-
-<p>
-Se generaron 100 millones de pares del tipo (y<sub>i</sub>, y<sub>i+1</sub>) para cada generador normalizado en el intervalo [0,1). Se requirió un valor elevado de pares para poder observar patrones en regiones reducidas del cuadrado unitario.
-</p>
-
-<div style="text-align: center;">
-  <p><img src="Imagenes/Distribucion_Pares1.png" alt="Distribución de a pares LCG-Xorshift32" style="width:100%;"></p>
-  <p><img src="Imagenes/Distribucion_Pares2.png" alt="Distribución de a pares Xorshift64-Xorshift128+" style="width:100%;"></p>
-  <p><img src="Imagenes/Distribucion_Pares3.png" alt="Distribución de a pares Xoshiro128++" style="width:50%; height:50%;"></p>
-</div>
-
-<p>
-De lo anterior, podemos ver como los generadores de menor periodo son más propensos a mostrar patrones, lo cual indica una aleatoriedad inferior que aquellos con periodo 2<sup>128</sup> - 1 como <code>xorshift128+</code> o <code>xoshiro128++</code> que no presentan patrones observables incluso con regiones de largo 10<sup>-4</sup>.
-Resulta interesante ver como los puntos generados por <code>xorshift32</code> están mejores distribuídos que aquellos generados por <code>xorshift64</code>; atribuímos este fenómeno al hecho de que ambos comparten fórmulas similares con la diferencia de que tienen distintos tamaños de estado, lo que implica que para números mayores a 2<sup>32</sup> no alcanza solamente con desplazamientos y operaciones xor para lograr una buena distribución. 
-</p>
-
-<h3 style="color: #DAA520;">4.4 Distribución en el Cubo Unitario</h3>
-
-<p>
-Se generaron 1 millón de triplas del tipo (y<sub>i</sub>, y<sub>i+1</sub>, y<sub>i+2</sub>) para cada generador normalizado en el intervalo [0,1). La motivación detrás de las gráficas era detectar algún patrón visible que puediera revelar sesgos o correlaciones no deseadas en la secuencia de números generados.
-</p>
-
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: auto;">
-  <img src="Imagenes/Distribucion3DLCG.png" alt="Distribución de a triplas LCG" style="width: 100%;">
-  <img src="Imagenes/Distribucion3DXorshift32.png" alt="Distribución de a triplas Xorshift32" style="width: 100%;">
-  <img src="Imagenes/Distribucion3DXorshift64.png" alt="Distribución de a triplas Xorshift64" style="width: 100%;">
-  <img src="Imagenes/Distribucion3DXorshift128.png" alt="Distribución de a triplas Xorshift128 style="width: 100%;">
-</div>
-<div style="width: 50%; margin: 20px auto 0 auto;">
-  <img src="Imagenes/Distribucion3DXoshiro128.png" alt="Distribución de a triplas Xoshiro128++" style="width: 100%;">
-</div>
-
-<p>
-Por lo visto en las gráficas, todos los generadores logran estimar adecuadamente el volumen del cubo unitario. Además, existe la posibilidad de interactuar con estas visualizaciones en el <a href="#codigo">código</a> pudiendo modificar el punto de vista y la cantidad de puntos generados.
-</p>
-
-<h3 style="color: #DAA520;">4.5 Simulación</h3>
+<h3 style="color: #DAA520;">4.2 Simulación</h3>
 
 <p>Resultados obtenidos de las simulaciones para distintas combinaciones de dimensión y cantidad de muestras:</p>
 
@@ -486,11 +483,104 @@ Por lo visto en las gráficas, todos los generadores logran estimar adecuadament
 
 <p>El tamaño de cada burbuja representa su costo, a mayor tamaño el generador asociado es más costoso. Por lo tanto, son preferibles las burbujas más pequeñas.</p>
 
-<h3 style="color: #DAA520;">4.7. Tests</h3>
+<hr>
+
+<h2 style="color: #DAA520;">5. Tests</h2>
+
+Se realizaron distintos tests para analizar propiedades estadísticas fundamentales de los generadores implementados
+
+<h3 style="color: #DAA520;">5.1 Eficiencia y Repetibilidad</h3>
+
+Se midió el tiempo de generación de 10<sup>7</sup> números por generador.
+
+<p><img src="Imagenes/TiempoDeGeneracion.png" alt="Tiempo de Generación" style="width:100%;"></p>
+
+El LCG resultó ser el más rápido de todos debido a la sencillez de su fórmula. Los generadores de tipo xorshift tienen demoras bastantes parecidas ya que cada uno genera números pseudoaleatorios de maneras similares; notar la influencia que tienen la operacion xor y la suma extra en la fórmula del `xorshift128+`. Por su parte, el generador `xoshiro128++`, cuya fórmula es la más compleja, resultó ser el más lento para generar valores como era de esperarse.
+
+Además, se probó que todos los generadores son deterministas. Al restaurar el estado inicial (semilla), producen exactamente la misma secuencia de números. Se validó esto superponiendo dos secuencias generadas desde la misma semilla, obteniendo coincidencias perfectas en cada caso.
+
+El test de repetibilidad evalúa si un generador de números pseudoaleatorios produce la misma secuencia cuando se inicializa con el mismo estado o semilla. Este comportamiento es fundamental para asegurar la reproducibilidad en simulaciones y experimentos numéricos.
+
+En esta prueba, la función `test_repetibilidad` se utilizó para comprobar si, dado el mismo estado inicial, cada generador produce secuencias idénticas en dos ejecuciones consecutivas.
+
+Para cada generador:
+
+1. Se restauró el estado inicial con la semilla correspondiente.
+2. Se generó una secuencia de números pseudoaleatorios.
+3. Se restauró nuevamente el mismo estado inicial.
+4. Se generó una segunda secuencia de números.
+5. Se compararon ambas secuencias para verificar igualdad.
+
+Si ambas secuencias coinciden exactamente, el generador pasa el test de repetibilidad.
+
+| Generador     | Eficiencia  | Repetibilidad   |
+|---------------|-------------|-----------------|
+| LCG           | Muy alta    | ✅              | 
+| Xorshift32    | Alta        | ✅              | 
+| Xorshift64    | Alta        | ✅              | 
+| Xorshift128+  | Media–Alta  | ✅              | 
+| Xoshiro128++  | Baja        | ✅              |
+
+Todos los generadores evaluados demostraron un comportamiento correcto en términos de repetibilidad, generando secuencias idénticas cuando se inicializan con la misma semilla o estado. Esto confirma que la implementación respeta el requisito fundamental de reproducibilidad.
+
+Este resultado es esperado, dado que los generadores de números pseudoaleatorios deben garantizar la misma secuencia para un mismo estado inicial, lo cual es clave para validaciones y pruebas en simulaciones numéricas y experimentos de Monte Carlo.
+
+<h3 style="color: #DAA520;">5.2 Evaluación Visual de Independencia y Uniformidad</h3>
+
+El objetivo de las siguientes pruebas es detectar correlaciones no deseadas o estructuras geométricas (como alineamientos o concentración en planos) que indicarían problemas con el generador.
+
+<h4 style="color: #DAA520;">5.2.1 Distribución Individual</h4>
+
+<p>
+Se generaron 10 millones de muestras para cada generador normalizado en el intervalo [0,1). También se utilizó como referencia el generador de números aleatorios en el intervalo [0,1) de la librería random de Python con una semilla fija de 42, el cual se implementa internamente con el algoritmo <a href="#ref5">Mersenne Twister MT19937</a> y está ampliamente probado que tiene una alta calidad estadística.
+</p>
+
+<p><img src="Imagenes/Distribucion_Indivdual.png" alt="Distribución individual de los generadores" style="width:100%;"></p>
+
+<p>
+Como se observa en los histogramas, para un N grande, la distribución se aproxima a una uniforme en el intervalo (0,1), lo cual es lo que esperaríamos de un buen generador.
+</p>
+
+<h4 style="color: #DAA520;">5.2.2 Distribución de a Pares</h4>
+
+<p>
+Se generaron 100 millones de pares del tipo (y<sub>i</sub>, y<sub>i+1</sub>) para cada generador normalizado en el intervalo [0,1). Se requirió un valor elevado de pares para poder observar patrones en regiones reducidas del cuadrado unitario.
+</p>
+
+<div style="text-align: center;">
+  <p><img src="Imagenes/Distribucion_Pares1.png" alt="Distribución de a pares LCG-Xorshift32" style="width:100%;"></p>
+  <p><img src="Imagenes/Distribucion_Pares2.png" alt="Distribución de a pares Xorshift64-Xorshift128+" style="width:100%;"></p>
+  <p><img src="Imagenes/Distribucion_Pares3.png" alt="Distribución de a pares Xoshiro128++" style="width:50%; height:50%;"></p>
+</div>
+
+<p>
+De lo anterior, podemos ver como los generadores de menor periodo son más propensos a mostrar patrones, lo cual indica una aleatoriedad inferior que aquellos con periodo 2<sup>128</sup> - 1 como <code>xorshift128+</code> o <code>xoshiro128++</code> que no presentan patrones observables incluso con regiones de largo 10<sup>-4</sup>.
+Resulta interesante ver como los puntos generados por <code>xorshift32</code> están mejores distribuídos que aquellos generados por <code>xorshift64</code>; atribuímos este fenómeno al hecho de que ambos comparten fórmulas similares con la diferencia de que tienen distintos tamaños de estado, lo que implica que para números mayores a 2<sup>32</sup> no alcanza solamente con desplazamientos y operaciones xor para lograr una buena distribución. 
+</p>
+
+<h4 style="color: #DAA520;">5.2.3 Distribución en el Cubo Unitario</h4>
+
+<p>
+Se generaron 1 millón de triplas del tipo (y<sub>i</sub>, y<sub>i+1</sub>, y<sub>i+2</sub>) para cada generador normalizado en el intervalo [0,1). La motivación detrás de las gráficas era detectar algún patrón visible que puediera revelar sesgos o correlaciones no deseadas en la secuencia de números generados.
+</p>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: auto;">
+  <img src="Imagenes/Distribucion3DLCG.png" alt="Distribución de a triplas LCG" style="width: 100%;">
+  <img src="Imagenes/Distribucion3DXorshift32.png" alt="Distribución de a triplas Xorshift32" style="width: 100%;">
+  <img src="Imagenes/Distribucion3DXorshift64.png" alt="Distribución de a triplas Xorshift64" style="width: 100%;">
+  <img src="Imagenes/Distribucion3DXorshift128.png" alt="Distribución de a triplas Xorshift128 style="width: 100%;">
+</div>
+<div style="width: 50%; margin: 20px auto 0 auto;">
+  <img src="Imagenes/Distribucion3DXoshiro128.png" alt="Distribución de a triplas Xoshiro128++" style="width: 100%;">
+</div>
+
+<p>
+Por lo visto en las gráficas, todos los generadores logran estimar adecuadamente el volumen del cubo unitario. Además, existe la posibilidad de interactuar con estas visualizaciones en el <a href="#codigo">código</a> pudiendo modificar el punto de vista y la cantidad de puntos generados.
+</p>
 
 <hr>
 
-<h2 style="color: #DAA520;">5. Conclusiones</h2>
+<h2 style="color: #DAA520;">6. Conclusiones</h2>
 
 <p> Del punto anterior, se concluye que: </p>
 
@@ -502,7 +592,7 @@ Por lo visto en las gráficas, todos los generadores logran estimar adecuadament
 
 <hr>
 
-<h2 style="color: #DAA520;", id="codigo">6. Código fuente</h2>
+<h2 style="color: #DAA520;", id="codigo">7. Código fuente</h2>
 
 <p>El código completo de simulación y generación de gráficos se incluye en el archivo <code>simulacion.ipynb</code> adjunto.</p>
 
@@ -525,6 +615,10 @@ Por lo visto en las gráficas, todos los generadores logran estimar adecuadament
 <li id="ref4">
   Intel Corporation. Intel® Digital Random Number Generator (DRNG) Software Implementation Guide.
   <a href="https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html" target="_blank">[Link]</a>
+</li>
+<li id="ref5">
+  Matsumoto, M., & Nishimura, T. (1998). ACM Transactions on Modeling and Computer Simulation.
+  <a href="https://dl.acm.org/doi/10.1145/272991.272995" target="_blank">[Link]</a>
 </li>
 </ol>
 
