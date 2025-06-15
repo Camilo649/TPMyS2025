@@ -24,20 +24,35 @@ thead {
 }
 </style>
 
-<h1 style="color: #DAA520;">Comparación de Generadores Pseudoaleatorios mediante el Método de Monte Carlo</h1>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+<h1 style="color: #DAA520; font-family: 'Orbitron', sans-serif; text-align: center;">
+  Comparación de Generadores Pseudoaleatorios mediante el Método de Monte Carlo
+</h1>
 
-<div style="font-family: 'Palatino Linotype', serif; font-size: 1.3em; margin-bottom: 1em;">
-  <p><strong>Integrantes:</strong></p>
-  <ul style="list-style-type: disc; margin-left: 30px;">
+<div style="
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.2em;
+  background:rgb(247, 245, 240);
+  color: #333;
+  border-left: 6px solid #4A90E2;
+  border-radius: 10px;
+  padding: 1em 1.5em;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin-bottom: 1.5em;
+">
+  <p style="margin-top: 0; font-weight: bold; font-size: 1.3em;">INTEGRANTES:</p>
+  <ul style="list-style-type: disc; margin-left: 20px; padding-left: 0.5em;">
     <li>ARIAS, Eliana</li>
     <li>GUTIÉRREZ, Camilo</li>
   </ul>
-  <p><strong>Fecha de entrega:</strong> 15 de junio 2025</p>
+  <p style="margin-top: 1em;"><strong>Fecha de Entrega:</strong> 15 de junio 2025</p>
 </div>
+
 
 <hr>
 
-<h2 style="color: #DAA520;">Resumen</h2>
+<h2 style="color: #DAA520; text-decoration: underline;">RESUMEN:</h2>
 
 <p>
 Este informe analiza y compara el desempeño de distintos generadores de números pseudoaleatorios aplicados a la estimación de una integral definida mediante el método de Monte Carlo. Se utilizan generadores clásicos como <code>LCG</code> y variantes más modernas como <code>Xorshift</code> y <code>Xoshiro</code>. Se evalúan su eficiencia, precisión, estabilidad y varianza obtenida en las simulaciones.
@@ -67,105 +82,154 @@ Se utiliza el método de Monte Carlo para estimar su valor con diferentes genera
 <h2 style="color: #DAA520;">2. Generadores estudiados</h2>
 
 <h3 style="color: #DAA520;">2.1 LCG (Linear Congruential Generator)</h3>
-<ul>
-<li><strong>Fórmula:</strong></li>
+<ul style="list-style-type: none; padding-left: 1em;">
+  <li><span style="color: black;">➤</span> <strong>Fórmula:</strong></li>
 
-$$
-Y_{n+1} = (a \cdot Y_n) \bmod m
-$$
+  $$
+  Y_{n+1} = (a \cdot Y_n) \bmod m
+  $$
 
-<li><strong>Parámetros usados:</strong> a = 16807, m = 2<sup>31</sup> - 1</li>
-<li><strong>Periodo:</strong> 2<sup>31</sup> - 2<sup><a href="#nota1">[1]</a></sup></li>
-<li><strong>Ventajas:</strong> Implementación sencilla, muy rápido.</li>
-<li><strong>Desventajas:</strong> Correlaciones a largo plazo, no adecuado para aplicaciones criptográficas.</li>
+  <li><span style="color: black;">➤</span> <strong>Parámetros usados:</strong> a = 16807, m = 2<sup>31</sup> - 1</li>
+  <li><span style="color: black;">➤</span> <strong>Periodo:</strong> 2<sup>31</sup> - 2<sup><a href="#nota1">[1]</a></sup></li>
+  <li><span style="color: black;">➤</span> <strong>Ventajas:</strong> Implementación sencilla, muy rápido.</li>
+  <li><span style="color: black;">➤</span> <strong>Desventajas:</strong> Correlaciones a largo plazo, no adecuado para aplicaciones criptográficas.</li>
 </ul>
 
 <h3 style="color: #DAA520;">2.2 Xorshift (32, 64, 128 bits)</h3>
+<ul style="list-style-type: none; padding-left: 1em;">
+  <li><span style="color: black;">➤</span> Utiliza operaciones XOR y desplazamientos bit a bit<sup><a href="#nota2">[2]</a></sup>.</li>
 
-- Utiliza operaciones XOR y desplazamientos bit a bit<sup><a href="#nota2">[2]</a></sup>.
-- **Xorshift32**  
-  - **Fórmula:**
-    $$
-    y = y \oplus (y \ll a);\quad
-    y = y \oplus (y \gg b);\quad
-    y = y \oplus (y \ll c)
-    $$  
-  - **Parámetros usados:** a = 13, b = 17, c = 5
-  - **Periodo:** 2<sup>32</sup> - 1</li>
+  <li>
+    <span style="color: black;">➤</span> <strong>Xorshift32</strong>
+    <ul style="list-style-type: none; padding-left: 1.5em;">
+      <li><span style="color: black;">➤</span> <strong>Fórmula:</strong></li>
 
-- **Xorshift64**  
-  - **Fórmula:**
-    $$
-    y = y \oplus (y \gg c);\quad 
-    y = y \oplus (y \ll b);\quad 
-    y = y \oplus (y \gg a)
-    $$  
-  - **Parámetros usados:** a = 1 b = 13, c = 45
-  - **Periodo:** 2<sup>64</sup> - 1</li>
+$$
+y = y \oplus (y \ll a);\quad
+y = y \oplus (y \gg b);\quad
+y = y \oplus (y \ll c)
+$$
 
-- **Xorshift128+**  
-  - **Fórmula:**
-    $$
-    y = estado_0 + estado_1 \mod 2^{64}
-    $$  
-  - **Parámetros usados:** a = 23, b = 18, c = 5
-  - **Periodo:** 2<sup>128</sup> - 1</li>
-<ul>
-<li><strong>Ventajas:</strong> Muy rápido, buena distribución estadística.</li>
-<li><strong>Desventajas:</strong> No es criptográficamente seguro.</li>
+  <li><span style="color: black;">➤</span> <strong>Parámetros usados:</strong> a = 13, b = 17, c = 5</li>
+  <li><span style="color: black;">➤</span> <strong>Periodo:</strong> 2<sup>32</sup> - 1</li>
+    </ul>
+  </li>
+
+  <li>
+    <span style="color: black;">➤</span> <strong>Xorshift64</strong>
+    <ul style="list-style-type: none; padding-left: 1.5em;">
+      <li><span style="color: black;">➤</span> <strong>Fórmula:</strong></li>
+
+$$
+y = y \oplus (y \gg c);\quad 
+y = y \oplus (y \ll b);\quad 
+y = y \oplus (y \gg a)
+$$
+      
+  <li><span style="color: black;">➤</span> <strong>Parámetros usados:</strong> a = 1, b = 13, c = 45</li>
+  <li><span style="color: black;">➤</span> <strong>Periodo:</strong> 2<sup>64</sup> - 1</li>
+    </ul>
+  </li>
+
+  <li>
+    <span style="color: black;">➤</span> <strong>Xorshift128+</strong>
+    <ul style="list-style-type: none; padding-left: 1.5em;">
+      <li><span style="color: black;">➤</span> <strong>Fórmula:</strong></li>
+
+$$
+y = \text{estado}_0 + \text{estado}_1 \mod (2^{64} - 1)
+$$
+
+  <li><span style="color: black;">➤</span> <strong>Parámetros usados:</strong> a = 23, b = 18, c = 5</li>
+  <li><span style="color: black;">➤</span> <strong>Periodo:</strong> 2<sup>128</sup> - 1</li>
+    </ul>
+  </li>
+
+  <li><span style="color: black;">➤</span> <strong>Ventajas:</strong> Muy rápido, buena distribución estadística.</li>
+  <li><span style="color: black;">➤</span> <strong>Desventajas:</strong> No es criptográficamente seguro.</li>
 </ul>
 
 <h3 style="color: #DAA520;">2.3 Xoshiro128++</h3>
-<ul>
-<li>Uno de los generadores modernos más robustos; sin embargo, estamos utilizando una de las versiones menos precisas de la familia xoshiro<sup><a href="#nota3">[3]</a></sup>.</li>
+<ul style="list-style-type: none; padding-left: 1em;">
+  <li><span style="color: black;">➤</span> Uno de los generadores modernos más robustos; sin embargo, estamos utilizando una de las versiones menos precisas de la familia xoshiro<sup><a href="#nota3">[3]</a></sup>.</li>
 
-<li><strong>Fórmula:</strong></li>
+  <li><span style="color: black;">➤</span> <strong>Fórmula:</strong></li>
 
-$$
-y = \text{rotl}(estado_0 + estado_3, r) + estado_0
-$$  
+  $$
+  y = \text{rotl}(estado_0 + estado_3, r) + estado_0
+  $$  
 
-<li><strong>Parámetros usados:</strong> a = 9, b = 11, r = 7</li>
-<li><strong>Periodo:</strong> 2<sup>128</sup> - 1</li>
-<li><strong>Ventajas:</strong> Buena calidad, velocidad adecuada para simulaciones numéricas.</li>
-<li><strong>Desventajas:</strong> Complejidad levemente mayor.</li>
+  <li><span style="color: black;">➤</span> <strong>Parámetros usados:</strong> a = 9, b = 11, r = 7</li>
+  <li><span style="color: black;">➤</span> <strong>Periodo:</strong> 2<sup>128</sup> - 1</li>
+  <li><span style="color: black;">➤</span> <strong>Ventajas:</strong> Buena calidad, velocidad adecuada para simulaciones numéricas.</li>
+  <li><span style="color: black;">➤</span> <strong>Desventajas:</strong> Complejidad levemente mayor.</li>
 </ul>
 
-<ol style="font-size: 0.9em; margin-left: 2em;">
-  <li id="nota1"> Por el Teorema 3.2. del apunte y por la verificación hecha en el <a href="#codigo">código adjunto</a>, podemos afirmar que el generador congruencial lineal tiene periódo máximo.</li>
-  <li id="nota2"> Las fórmulas y parámetros de los generadores xorshift32 y xorshift64 fueron elegidas de entre todas las posbiles que garantizan un periódo máximo según <a href="#ref1">Marsaglia (2003)</a>. Para el caso del generador xorshift128, nos basamos en la implementación de <a href="#ref2">Vigna (2017)</a> que garantiza periodo máximo.</li>
-  <li id="nota3"> Nos guiamos de la implementación propuesta por <a href="#ref3">Blackman & Vignia(2021)</a> que garantiza periodo máximo.</li>
+
+<ol style="font-size: 1.1em; margin-left: 2em; font-weight: normal;">
+  <li id="nota1" style="font-weight: normal;">
+    Por el Teorema 3.2. del apunte y por la verificación hecha en el 
+    <a href="#codigo">código adjunto</a>, podemos afirmar que el generador congruencial lineal tiene periódo máximo.
+  </li>
+  <li id="nota2" style="font-weight: normal;">
+    Las fórmulas y parámetros de los generadores xorshift32 y xorshift64 fueron elegidas de entre todas las posbiles que garantizan un periódo máximo según 
+    <a href="#ref1">Marsaglia (2003)</a>. Para el caso del generador xorshift128, nos basamos en la implementación de 
+    <a href="#ref2">Vigna (2017)</a> que garantiza periodo máximo.
+  </li>
+  <li id="nota3" style="font-weight: normal;">
+    Nos guiamos de la implementación propuesta por 
+    <a href="#ref3">Blackman & Vignia(2021)</a> que garantiza periodo máximo.
+  </li>
 </ol>
+
+<style>
+  ol {
+    font-size: 1.1em;
+    margin-left: 2em;
+  }
+  ol li::marker {
+    font-weight: bold;
+  }
+</style>
+
 
 <hr>
 
 <h2 style="color: #DAA520;">3. Metodología</h2>
+<ul style="list-style: none; padding-left: 0; font-size: 1em;">
+  <li style="margin-bottom: 0.8em;">
+    <span style="color: black; font-weight: bold; margin-right: 0.6em;">➤</span>
+    <strong>Lenguaje usado:</strong> Python 3.12.3
+  </li>
+  <li style="margin-bottom: 0.8em;">
+    <span style="color: black; font-weight: bold; margin-right: 0.6em;">➤</span>
+    <strong>Librerías:</strong> mumpy, matplotlib, math, time, ctypes, tempfile, subprocess, os, sympy, random, ipywidgets, mpl_toolkits, IPython
+  </li>
+  <li style="margin-bottom: 0.8em;">
+    <span style="color: black; font-weight: bold; margin-right: 0.6em;">➤</span>
+    <strong>Simulación:</strong>
+  </li>
 
-<ul>
-<li><strong>Lenguaje usado:</strong> Python 3.12.3</li>
-<li><strong>Librerías:</strong> mumpy, matplotlib, math, time, ctypes, tempfile, subprocess, os, sympy, random, ipywidgets, mpl_toolkits, IPython</li>
-<li><strong>Simulación:</strong></li>
+Dado que el integrando es un producto de funciones que dependen <strong>cada una de una sola variable</strong> \( x_i \), la integral se puede reescribir como un <strong>producto de integrales unidimensionales</strong>:
 
-Dado que el integrando es un producto de funciones que dependen **cada una de una sola variable** \( x_i \), la integral se puede reescribir como un **producto de integrales unidimensionales**:
+$$
+I_d = \int_{[0,1]^d} \prod_{i=1}^{d} e^{-x_i^2} \, dx
+= \prod_{i=1}^d \left( \int_0^1 e^{-x_i^2} \, dx_i \right)
+$$
 
-  $$
-  I_d = \int_{[0,1]^d} \prod_{i=1}^{d} e^{-x_i^2} \, dx
-  = \prod_{i=1}^d \left( \int_0^1 e^{-x_i^2} \, dx_i \right)
-  $$
+Para estimar la integral, se hace uso del <strong>método de Monte Carlo</strong> que consiste en: generar \( N \) muestras \(\mathbf{x}^{(k)} = \big(x_1^{(k)}, x_2^{(k)}, \ldots, x_d^{(k)}\big), \quad \text{para } k = 1, 2, \ldots, N\) de forma uniforme, y evaluar en cada una de ellas la función:
 
-  Para estimar la integral, se hace uso del **método de Monte Carlo** que consiste en: generar \( N \) muestras \(\mathbf{x}^{(k)} = \big(x_1^{(k)}, x_2^{(k)}, \ldots, x_d^{(k)}\big), \quad \text{para } k = 1, 2, \ldots, N\) de forma uniforme, y evaluar en cada una de ellas la función:
+$$
+f(\mathbf{x}) = \prod_{i=1}^d e^{-x_i^2}
+$$
 
-  $$
-  f(\mathbf{x}) = \prod_{i=1}^d e^{-x_i^2}
-  $$
+Luego, la estimación de \( I_d \) es simplemente el promedio de estos valores:
 
-  Luego, la estimación de \( I_d \) es simplemente el promedio de estos valores:
+$$
+\hat{I}_d = \frac{1}{N} \sum_{k=1}^{N} f(\mathbf{x}^{(k)})
+$$
 
-  $$
-  \hat{I}_d = \frac{1}{N} \sum_{k=1}^{N} f(\mathbf{x}^{(k)})
-  $$
-
-  En la implementación, esto se logra generando un valor aleatorio \( x_i \sim \mathcal{U}(0,1) \) para cada dimensión, y acumulando el producto \( \prod_{i=1}^{i-1} e^{-x_i^2} \). Esa operación corresponde al siguiente fragmento de código:
+En la implementación, esto se logra generando un valor aleatorio \( x_i \sim \mathcal{U}(0,1) \) para cada dimensión, y acumulando el producto \( \prod_{i=1}^{i-1} e^{-x_i^2} \). Esa operación corresponde al siguiente fragmento de código:
 
   ```python
   def f(rng, d):
@@ -176,24 +240,34 @@ Dado que el integrando es un producto de funciones que dependen **cada una de un
       return prod
   ```
 
-  Cada llamada a \( f(rng, d) \) representa una muestra \( \mathbf{x}^{(k)} \) y su evaluación del integrando.
+Cada llamada a \( f(rng, d) \) representa una muestra \( \mathbf{x}^{(k)} \) y su evaluación del integrando.
 
-  Finalmente, para evaluar la eficiencia de la estimación, se repite este proceso con diferentes cantidades de muestras:
+Finalmente, para evaluar la eficiencia de la estimación, se repite este proceso con diferentes cantidades de muestras y dimensiones:
 
-  - **Muestras simuladas:**  
-    \( N = 10^{4}, \quad 10^{5}, \quad 10^{6} \)
-
-  - **Dimensiones simuladas:**  
-    \( d = 2, \quad 5, \quad 10 \)
-
-  Y se calcula, para cada caso:
-
-  - El valor estimado \( \hat{I}_d \)
-  - El tiempo de ejecución
-  - La varianza muestral
-  - El error cuadrático medio respecto al valor exacto
-
-<li><strong>Tests adicionales:</strong> Eficiencia, Repetibilidad, Independencia y Uniformidad, Chi-cuadrado y Kolmogrow-Smirnov.</li>
+  <li style="list-style: none; padding-left: 0; font-size: 1em;">
+    <ul style="margin-bottom: 0.8em;">
+      <li>
+        <strong>Muestras simuladas:</strong>  
+        N = 10⁴, 10⁵, 10⁶
+      </li>
+      <li style="margin-bottom: 0.8em;">
+        <strong>Dimensiones simuladas:</strong>  
+        d = 2, 5, 10
+      </li>
+      <li style="margin-bottom: 0.8em;">
+        Y se calcula, para cada caso:
+        <ul style="list-style: none; padding-left: 1.5em; margin-top: 0.3em;">
+          <li style="margin-bottom: 0.3em;">Valor estimado Î<sub>d</sub></li>
+          <li style="margin-bottom: 0.3em;">Tiempo de ejecución</li>
+          <li style="margin-bottom: 0.3em;">Varianza muestral</li>
+          <li style="margin-bottom: 0.3em;">Error cuadrático medio respecto al valor exacto</li>
+        </ul>
+    </ul>
+  </li>
+  <li style="margin-bottom: 0.8em;">
+    <span style="color: black; font-weight: bold; margin-right: 0.6em;">➤</span>
+    <strong>Tests adicionales:</strong> Eficiencia, Repetibilidad, Independencia y Uniformidad, Chi-cuadrado y Kolmogrow-Smirnov.
+  </li>
 </ul>
 
 <hr>
@@ -203,7 +277,7 @@ Dado que el integrando es un producto de funciones que dependen **cada una de un
 <h3 style="color: #DAA520;">4.1 Semilla</h3>
 
 <p>
-Para obtener una semilla de buena calidad estadística, hacemos uso de la instrucción <a href="#ref4">RDSEED</a> la cual, dependiendo de la versión, genera un número <strong>aleatorio</strong> de 32 o 64 bits a partir del hardware. Suele ser bastante lenta ya que, además de recolectar entropía, realiza tests de autoverificación internos y puede incluso llegar a fallar si no hay suficiente entropía.
+Para obtener una semilla de buena calidad estadística, hacemos uso de la instrucción <a href="#ref4">RDSEED</a> la cual, dependiendo de la versión, genera un número <strong>aleatorio</strong> de 32 o 64 bits a partir del hardware. Suele ser bastante lenta ya que, además de recolectar entropía, realiza tests de autoverificación internos y puede incluso llegar a fallar si considera que no hay suficiente entropía.
 </p>
 
 <p>
@@ -370,7 +444,7 @@ En lo que respecta a las simulaciones, utilizaremos las siguientes semillas obte
 
 <h2 style="color: #DAA520;">5. Tests</h2>
 
-Se realizaron distintos tests para analizar propiedades estadísticas fundamentales de los generadores implementados
+Se realizaron distintos tests para analizar propiedades estadísticas fundamentales de los generadores implementados, los cuales serán descriptos a continuación.
 
 <h3 style="color: #DAA520;">5.1 Eficiencia y Repetibilidad</h3>
 
@@ -404,9 +478,7 @@ Si ambas secuencias coinciden exactamente, el generador pasa el test de repetibi
 | Xorshift128+  | Media–Alta  | ✅              | 
 | Xoshiro128++  | Baja        | ✅              |
 
-Todos los generadores evaluados demostraron un comportamiento correcto en términos de repetibilidad, generando secuencias idénticas cuando se inicializan con la misma semilla o estado. Esto confirma que la implementación respeta el requisito fundamental de reproducibilidad.
-
-Este resultado es esperado, dado que los generadores de números pseudoaleatorios deben garantizar la misma secuencia para un mismo estado inicial, lo cual es clave para validaciones y pruebas en simulaciones numéricas y experimentos de Monte Carlo.
+Todos los generadores evaluados demostraron un comportamiento correcto en términos de repetibilidad, generando secuencias idénticas cuando se inicializan con la misma semilla o estado. Esto confirma que la implementación respeta el requisito fundamental de reproducibilidad, el cual es clave para validaciones y pruebas en simulaciones numéricas y experimentos de Monte Carlo.
 
 <h3 style="color: #DAA520;">5.2 Evaluación Visual de Independencia y Uniformidad</h3>
 
@@ -415,7 +487,7 @@ El objetivo de las siguientes pruebas es detectar correlaciones no deseadas o es
 <h4 style="color: #DAA520;">5.2.1 Distribución Individual</h4>
 
 <p>
-Se generaron 10 millones de muestras para cada generador normalizado en el intervalo [0,1). También se utilizó como referencia el generador de números aleatorios en el intervalo [0,1) de la librería random de Python con una semilla fija de 42, el cual se implementa internamente con el algoritmo <a href="#ref5">Mersenne Twister MT19937</a> y está ampliamente probado que tiene una alta calidad estadística.
+Se generaron 10 millones de muestras para cada generador normalizado en el intervalo [0,1). También se utilizó como referencia el generador de números aleatorios en el intervalo [0,1) de la librería random de Python, el cual se implementa internamente con el algoritmo <a href="#ref5">Mersenne Twister MT19937</a> y está ampliamente probado que tiene una alta calidad estadística.
 </p>
 
 <p><img src="Imagenes/Distribucion_Indivdual.png" alt="Distribución individual de los generadores" style="width:100%;"></p>
@@ -437,7 +509,7 @@ Se generaron 100 millones de pares del tipo (y<sub>i</sub>, y<sub>i+1</sub>) par
 </div>
 
 <p>
-De lo anterior, podemos ver como los generadores de menor periodo son más propensos a mostrar patrones, lo cual indica una aleatoriedad inferior que aquellos con periodo 2<sup>128</sup> - 1 como <code>xorshift128+</code> o <code>xoshiro128++</code> que no presentan patrones observables incluso con regiones de largo 10<sup>-4</sup>.
+De lo anterior, podemos ver como los generadores de menor periodo son más propensos a mostrar patrones, lo cual indica una aleatoriedad inferior que aquellos con periodo 2<sup>128</sup> - 1 como <code>xorshift128+</code> o <code>xoshiro128++</code> que no presentan patrones observables incluso bajo regiones de largo 10<sup>-4</sup>.
 Resulta interesante ver como los puntos generados por <code>xorshift32</code> están mejores distribuídos que aquellos generados por <code>xorshift64</code>; atribuímos este fenómeno al hecho de que ambos comparten fórmulas similares con la diferencia de que tienen distintos tamaños de estado, lo que implica que para números mayores a 2<sup>32</sup> no alcanza solamente con desplazamientos y operaciones xor para lograr una buena distribución. 
 </p>
 
@@ -490,7 +562,7 @@ Para cada simulación, la muestra generada para calcular el estadístico t<sub>i
 <h3 style="color: #DAA520;">5.4 Tests de Bondad de Ajuste Kolmogorov-Smirnov</h3>
 
 Similar a la batería de tests anterior, la motivación fue medir el nivel de confianza alcanzado cuando se simula una muestra proveniente de una distribución continua con cada uno de los generadores.
-Para cada distribución, el nivel de confianza está dado por la estimación del p-valor obtenido en una cantidad de simulaciones del test de hipótesis Kolmogorov-Smirnov bajo la hipótesis nula de que la muestra generada proviene de tal distribución. Se consideraron las siguientes distribuciones de las cuales se tienen implementaciones en el apunte de la materia o bien fueron programadas en algún ejercicio:
+Para cada distribución, el nivel de confianza está dado por la estimación del p-valor obtenido en una cantidad de simulaciones del test de hipótesis Kolmogorov-Smirnov bajo la hipótesis nula de que la muestra generada proviene de tal distribución. Se consideraron las siguientes distribuciones de las cuales se tienen implementaciones en el apunte de la materia o bien fueron programadas en algún ejercicio de las guías prácticas dadas:
 - Uniforme (continua) (1,10)
 - Normal Estándar (0,1)
 - Exponencial (4)
@@ -508,18 +580,41 @@ Para cada simulación, la muestra generada para calcular el estadístico d<sub>i
 
 <h2 style="color: #DAA520;">6. Conclusiones</h2>
 
-<p> De los dos puntos anteriores, se concluye que: </p>
+<div style="background-color: #f9f9f9; border-left: 6px solid #DAA520; padding: 1.5em; font-family: 'Georgia', serif; font-size: 1.1em; line-height: 1.7; border-radius: 8px;">
 
-<ul>
-  <li>Generalmente, a medida que la dimensión y el tamaño de la muestra aumentan, las estimaciones tienden a ser más precias, ya que el error absoluto disminuye, mientras que la varianza se mantiene relativamente estable. Esto sucede porque al generar una mayor cantidad de valores, se puede observar que las distribuciones de los generadores se aproximan mejor a una distribución uniforme, especialmente cuando el tamaño de la muestra es lo suficientemente grande. También se puede apreciar en las tablas, como la varianza y el error cuadrático medio son idénticos, lo cual refuerza el hecho de que la media muestral es un estimador insesgado de la integral.</li>
-  <li>Para los 5 generadores estudiados, el análisis de costos nos dice que: si es más prioritaria la velocidad que la calidad estadística, genradores como el <code>congruencial lineal</code> o <code>xorshift32</code> son las mejores opciones; si por otro lado, interesa más la calidad de los valores generados, siempre conviene utilizar <code>xorshift128+</code> antes que <code>xoshiro128++</code> ya que el primero puede llegar a conseguir casi la misma precisión y en un menor tiempo; por último, se concluye que <code>xorshift64</code> no tiene muy buenas aplicaciones prácticas ya que los dos primeros generadores consiguen resultados más precisos en menor cantidad de tiempo.
-  <li>Todos los generadores son repetibles y su velocidad computacional esta fuertemente ligada a la complejidad de su fórmula. En cuanto a protabilidad se refiere, no utilizamos ninguna función o librería específica de Python para la implementación de los generadores, ni tampoco tenemos dependecia de alguna arquitectura en específico, por lo que nuestras implementaciones de los generadores de números pseudoaleatorios son fácilmente replicables en cualquier otro lenguaje que soporte operaciones lógicas como xor, and, or, etc. Incluso, a diferencia de Python, la gran mayoría de lenguajes tienen límites estrictos para el tamaño de los números enteros, lo cual haría que no fueran necesarias las máscaras y se podría incluso mejorar la eficiencia.</li>
-  <li>El periódo de un generador no influye tanto en la distribución, i.e. periodos grandes no garantizan alta aleatoriedad. Sin embargo, los generadores con los mayores periodos demuestran ser más efectivos para criptografía, ya que se hace computacionalmente inviable el poder detectar patrones.</li>
-  <li>Al momento de simular muestras de variables aleatorias discretas, todos los generadores tuvieron estadísticos muy altos para la distribución geométrica y uniforme que hicieron que el p-valor tendiese a 0. Confiamos en que las implementaciones, tanto de los generadores como de las distribuciones están bien realizadas, por lo que le atribuímos el bajo grado de confianza a la sensibilidad del test y/o a problemas en la discretización o agrupamiento de las clases. Para las demás distribuciones, no hay evidencias signficativas de que un generador sea mejor que otro para alguna distribución en concreto; sin embargo, se llegan a alcanzar diferencias del 10% más de confianza para las distribuciones Binomial y de Poisson entre algunos generadores</li>
-  <li>En cuanto a la simulaciones de muestras de variables aleatorias continuas, si bien también se pueden llegar a presentar diferencias del 10% de confianza entre generadores para la distribución exponencial, sobre todo si comparamos contra <code>xoshiro128++</code> que parece ser el que peor la simula. Atribuímos las similitudes de las estimaciones de los p-valores para el resto de distribuciones a la menor sensibilidad (respecto al test chi-cuadrado) que presenta el test de Kolmogorov-Smirnov.</li>
-</ul>
+  <p style="font-weight: bold; font-size: 1.3em; color: #444; margin-bottom: 1em;">De los dos puntos anteriores, se concluye que:</p>
 
-<hr>
+  <p style="margin-bottom: 1em;">
+    <span style="color: #DAA520; font-weight: bold; margin-right: 0.5em;">➤</span>
+    Generalmente, a medida que la dimensión y el tamaño de la muestra aumentan, las estimaciones tienden a ser más precias, ya que el error absoluto disminuye, mientras que la varianza se mantiene relativamente estable. Esto sucede porque al generar una mayor cantidad de valores, se puede observar que las distribuciones de los generadores se aproximan mejor a una distribución uniforme, especialmente cuando el tamaño de la muestra es lo suficientemente grande. También se puede apreciar en las tablas, como la varianza y el error cuadrático medio son idénticos, lo cual refuerza el hecho de que la media muestral es un estimador insesgado de la integral.
+  </p>
+
+  <p style="margin-bottom: 1em;">
+    <span style="color: #DAA520; font-weight: bold; margin-right: 0.5em;">➤</span>
+    Para los 5 generadores estudiados, el análisis de costos nos dice que: si es más prioritaria la velocidad que la calidad estadística, genradores como el <code>congruencial lineal</code> o <code>xorshift32</code> son las mejores opciones; si por otro lado, interesa más la calidad de los valores generados, siempre conviene utilizar <code>xorshift128+</code> antes que <code>xoshiro128++</code> ya que el primero puede llegar a conseguir casi la misma precisión y en un menor tiempo; por último, se concluye que <code>xorshift64</code> no tiene muy buenas aplicaciones prácticas ya que los dos primeros generadores consiguen resultados más precisos en menor cantidad de tiempo.
+  </p>
+
+  <p style="margin-bottom: 1em;">
+    <span style="color: #DAA520; font-weight: bold; margin-right: 0.5em;">➤</span>
+    Todos los generadores son repetibles y su velocidad computacional esta fuertemente ligada a la complejidad de su fórmula. En cuanto a protabilidad se refiere, no utilizamos ninguna función o librería específica de Python para la implementación de los generadores, ni tampoco tenemos dependecia de alguna arquitectura en específico, por lo que nuestras implementaciones de los generadores de números pseudoaleatorios son fácilmente replicables en cualquier otro lenguaje que soporte operaciones lógicas como xor, and, or, etc. Incluso, a diferencia de Python, la gran mayoría de lenguajes tienen límites estrictos para el tamaño de los números enteros, lo cual haría que no fueran necesarias las máscaras y se podría incluso mejorar la eficiencia.
+  </p>
+
+  <p style="margin-bottom: 1em;">
+    <span style="color: #DAA520; font-weight: bold; margin-right: 0.5em;">➤</span>
+    El periódo de un generador no influye tanto en la distribución, i.e. periodos grandes no garantizan alta aleatoriedad. Sin embargo, los generadores con los mayores periodos demuestran ser más efectivos para criptografía, ya que se hace computacionalmente inviable el poder detectar patrones.
+  </p>
+
+  <p style="margin-bottom: 1em;">
+    <span style="color: #DAA520; font-weight: bold; margin-right: 0.5em;">➤</span>
+    Al momento de simular muestras de variables aleatorias discretas, todos los generadores tuvieron estadísticos muy altos para la distribución geométrica y uniforme que hicieron que el p-valor tendiese a 0. Confiamos en que las implementaciones, tanto de los generadores como de las distribuciones están bien realizadas, por lo que le atribuímos el bajo grado de confianza a la sensibilidad del test y/o a problemas en la discretización o agrupamiento de las clases. Para las demás distribuciones, no hay evidencias signficativas de que un generador sea mejor que otro para alguna distribución en concreto; sin embargo, se llegan a alcanzar diferencias del 10% más de confianza para las distribuciones Bernoulli, Binomial y de Poisson entre algunos generadores.
+  </p>
+
+  <p style="margin-bottom: 0.5em;">
+    <span style="color: #DAA520; font-weight: bold; margin-right: 0.5em;">➤</span>
+    En cuanto a la simulaciones de muestras de variables aleatorias continuas, si bien también se pueden llegar a presentar diferencias del 10% de confianza entre generadores para la distribución exponencial, sobre todo si comparamos contra <code>xoshiro128++</code> que parece ser el que peor la simula. Atribuímos las similitudes de las estimaciones de los p-valores para el resto de distribuciones a la menor sensibilidad (respecto al test chi-cuadrado) que presenta el test de Kolmogorov-Smirnov.
+  </p>
+
+</div>
 
 <h2 style="color: #DAA520;", id="codigo">7. Código Fuente</h2>
 
@@ -527,7 +622,7 @@ Para cada simulación, la muestra generada para calcular el estadístico d<sub>i
 
 <hr>
 
-<h2 style="color: #DAA520;">Bibliografía</h2>
+<h2 style="color: #DAA520; text-decoration: underline;">Bibliografía</h2>
 <ol>
   <li id="ref1">
     Marsaglia, G. (2003). Xorshift RNGs. Journal of Statistical Software.
