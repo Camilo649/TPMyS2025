@@ -5,6 +5,9 @@ figure {
   display: table;
   margin: 1em auto;
   text-align: center;
+  page-break-inside: avoid;
+  width: auto;
+  font-size: 0.65em;
 }
 
 figcaption {
@@ -263,21 +266,21 @@ En lo que respecta a las simulaciones, utilizaremos las siguientes semillas obte
       </tr>
     </thead>
     <tbody>
-      <tr><td>LCG</td><td>10,000</td><td>0.557396</td><td>3.50e-04</td><td>4.68e-02</td><td>4.80e-06</td><td>0.03s</td></tr>
-      <tr><td>LCG</td><td>100,000</td><td>0.557629</td><td>1.17e-04</td><td>4.66e-02</td><td>4.79e-07</td><td>0.12s</td></tr>
-      <tr><td>LCG</td><td>1,000,000</td><td>0.557927</td><td>1.81e-04</td><td>4.67e-02</td><td>7.94e-08</td><td>1.16s</td></tr>
-      <tr><td>Xorshift32</td><td>10,000</td><td>0.560950</td><td>3.20e-03</td><td>4.66e-02</td><td>1.49e-05</td><td>0.02s</td></tr>
-      <tr><td>Xorshift32</td><td>100,000</td><td>0.557517</td><td>2.29e-04</td><td>4.67e-02</td><td>5.20e-07</td><td>0.16s</td></tr>
-      <tr><td>Xorshift32</td><td>1,000,000</td><td>0.558074</td><td>3.27e-04</td><td>4.67e-02</td><td>1.54e-07</td><td>1.55s</td></tr>
-      <tr><td>Xorshift64</td><td>10,000</td><td>0.562412</td><td>4.67e-03</td><td>4.66e-02</td><td>2.64e-05</td><td>0.02s</td></tr>
-      <tr><td>Xorshift64</td><td>100,000</td><td>0.557761</td><td>1.49e-05</td><td>4.68e-02</td><td>4.68e-07</td><td>0.20s</td></tr>
-      <tr><td>Xorshift64</td><td>1,000,000</td><td>0.557675</td><td>7.13e-05</td><td>4.67e-02</td><td>5.18e-08</td><td>2.05s</td></tr>
-      <tr><td>Xorshift128</td><td>10,000</td><td>0.557103</td><td>6.43e-04</td><td>4.75e-02</td><td>5.16e-06</td><td>0.02s</td></tr>
-      <tr><td>Xorshift128</td><td>100,000</td><td>0.558709</td><td>9.62e-04</td><td>4.66e-02</td><td>1.39e-06</td><td>0.21s</td></tr>
-      <tr><td>Xorshift128</td><td>1,000,000</td><td>0.558150</td><td>4.04e-04</td><td>4.67e-02</td><td>2.10e-07</td><td>2.13s</td></tr>
-      <tr><td>Xoshiro128</td><td>10,000</td><td>0.559855</td><td>2.11e-03</td><td>4.77e-02</td><td>9.22e-06</td><td>0.03s</td></tr>
-      <tr><td>Xoshiro128</td><td>100,000</td><td>0.559100</td><td>1.35e-03</td><td>4.69e-02</td><td>2.30e-06</td><td>0.33s</td></tr>
-      <tr><td>Xoshiro128</td><td>1,000,000</td><td>0.557454</td><td>2.92e-04</td><td>4.67e-02</td><td>1.32e-07</td><td>2.97s</td></tr>
+      <tr><td>LCG</td><td>10,000</td><td>0.557396</td><td>3.50e-04</td><td>4.68e-02</td><td>4.68e-02</td><td>0.01s</td></tr>
+      <tr><td>LCG</td><td>100,000</td><td>0.557629</td><td>1.17e-04</td><td>4.66e-02</td><td>4.66e-02</td><td>0.09s</td></tr>
+      <tr><td>LCG</td><td>1,000,000</td><td>0.557927</td><td>1.81e-04</td><td>4.67e-02</td><td>4.67e-02</td><td>0.82s</td></tr>
+      <tr><td>Xorshift32</td><td>10,000</td><td>0.560950</td><td>3.20e-03</td><td>4.67e-02</td><td>4.67e-02</td><td>0.01s</td></tr>
+      <tr><td>Xorshift32</td><td>100,000</td><td>0.557517</td><td>2.29e-04</td><td>4.67e-02</td><td>4.67e-02</td><td>0.11s</td></tr>
+      <tr><td>Xorshift32</td><td>1,000,000</td><td>0.558074</td><td>3.27e-04</td><td>4.67e-02</td><td>4.67e-02</td><td>1.08s</td></tr>
+      <tr><td>Xorshift64</td><td>10,000</td><td>0.562412</td><td>4.67e-03</td><td>4.67e-02</td><td>4.67e-02</td><td>0.01s</td></tr>
+      <tr><td>Xorshift64</td><td>100,000</td><td>0.557761</td><td>1.49e-05</td><td>4.68e-02</td><td>4.68e-02</td><td>0.14s</td></tr>
+      <tr><td>Xorshift64</td><td>1,000,000</td><td>0.557675</td><td>7.13e-05</td><td>4.67e-02</td><td>4.67e-02</td><td>1.28s</td></tr>
+      <tr><td>Xorshift128</td><td>10,000</td><td>0.557103</td><td>6.43e-04</td><td>4.75e-02</td><td>4.75e-02</td><td>0.02s</td></tr>
+      <tr><td>Xorshift128</td><td>100,000</td><td>0.558709</td><td>9.62e-04</td><td>4.66e-02</td><td>4.66e-02</td><td>0.16s</td></tr>
+      <tr><td>Xorshift128</td><td>1,000,000</td><td>0.558150</td><td>4.04e-04</td><td>4.67e-02</td><td>4.67e-02</td><td>1.41s</td></tr>
+      <tr><td>Xoshiro128</td><td>10,000</td><td>0.559855</td><td>2.11e-03</td><td>4.77e-02</td><td>4.77e-02</td><td>0.02s</td></tr>
+      <tr><td>Xoshiro128</td><td>100,000</td><td>0.559100</td><td>1.35e-03</td><td>4.69e-02</td><td>4.69e-02</td><td>0.17s</td></tr>
+      <tr><td>Xoshiro128</td><td>1,000,000</td><td>0.557454</td><td>2.92e-04</td><td>4.67e-02</td><td>4.67e-02</td><td>1.77s</td></tr>
     </tbody>
   </table>
   <figcaption>Resultados para d = 2</figcaption>
@@ -297,21 +300,21 @@ En lo que respecta a las simulaciones, utilizaremos las siguientes semillas obte
       </tr>
     </thead>
     <tbody>
-      <tr><td>LCG</td><td>10,000</td><td>0.230003</td><td>2.32e-03</td><td>2.19e-02</td><td>7.57e-06</td><td>0.03s</td></tr>
-      <tr><td>LCG</td><td>100,000</td><td>0.231919</td><td>4.04e-04</td><td>2.24e-02</td><td>3.87e-07</td><td>0.25s</td></tr>
-      <tr><td>LCG</td><td>1,000,000</td><td>0.232385</td><td>6.27e-05</td><td>2.26e-02</td><td>2.65e-08</td><td>2.76s</td></tr>
-      <tr><td>Xorshift32</td><td>10,000</td><td>0.231253</td><td>1.07e-03</td><td>2.21e-02</td><td>3.36e-06</td><td>0.03s</td></tr>
-      <tr><td>Xorshift32</td><td>100,000</td><td>0.232458</td><td>1.36e-04</td><td>2.25e-02</td><td>2.43e-07</td><td>0.34s</td></tr>
-      <tr><td>Xorshift32</td><td>1,000,000</td><td>0.232196</td><td>1.27e-04</td><td>2.26e-02</td><td>3.87e-08</td><td>3.38s</td></tr>
-      <tr><td>Xorshift64</td><td>10,000</td><td>0.230702</td><td>1.62e-03</td><td>2.22e-02</td><td>4.85e-06</td><td>0.05s</td></tr>
-      <tr><td>Xorshift64</td><td>100,000</td><td>0.231745</td><td>5.78e-04</td><td>2.25e-02</td><td>5.59e-07</td><td>0.46s</td></tr>
-      <tr><td>Xorshift64</td><td>1,000,000</td><td>0.232465</td><td>1.43e-04</td><td>2.26e-02</td><td>4.30e-08</td><td>4.45s</td></tr>
-      <tr><td>Xorshift128</td><td>10,000</td><td>0.232701</td><td>3.78e-04</td><td>2.24e-02</td><td>2.39e-06</td><td>0.05s</td></tr>
-      <tr><td>Xorshift128</td><td>100,000</td><td>0.232442</td><td>1.19e-04</td><td>2.25e-02</td><td>2.39e-07</td><td>0.55s</td></tr>
-      <tr><td>Xorshift128</td><td>1,000,000</td><td>0.232196</td><td>1.27e-04</td><td>2.26e-02</td><td>3.87e-08</td><td>4.87s</td></tr>
-      <tr><td>Xoshiro128</td><td>10,000</td><td>0.232263</td><td>5.96e-05</td><td>2.26e-02</td><td>2.27e-06</td><td>0.07s</td></tr>
-      <tr><td>Xoshiro128</td><td>100,000</td><td>0.231895</td><td>4.27e-04</td><td>2.25e-02</td><td>4.08e-07</td><td>0.66s</td></tr>
-      <tr><td>Xoshiro128</td><td>1,000,000</td><td>0.232328</td><td>5.41e-06</td><td>2.26e-02</td><td>2.26e-08</td><td>6.63s</td></tr>
+      <tr><td>LCG</td><td>10,000</td><td>0.230003</td><td>2.32e-03</td><td>2.19e-02</td><td>2.19e-02</td><td>0.02s</td></tr>
+      <tr><td>LCG</td><td>100,000</td><td>0.231919</td><td>4.04e-04</td><td>2.24e-02</td><td>2.24e-02</td><td>0.16s</td></tr>
+      <tr><td>LCG</td><td>1,000,000</td><td>0.232385</td><td>6.27e-05</td><td>2.26e-02</td><td>2.26e-02</td><td>1.60s</td></tr>
+      <tr><td>Xorshift32</td><td>10,000</td><td>0.231253</td><td>1.07e-03</td><td>2.21e-02</td><td>2.21e-02</td><td>0.02s</td></tr>
+      <tr><td>Xorshift32</td><td>100,000</td><td>0.232458</td><td>1.36e-04</td><td>2.25e-02</td><td>2.25e-02</td><td>0.21s</td></tr>
+      <tr><td>Xorshift32</td><td>1,000,000</td><td>0.232196</td><td>1.27e-04</td><td>2.26e-02</td><td>2.26e-02</td><td>2.11s</td></tr>
+      <tr><td>Xorshift64</td><td>10,000</td><td>0.230702</td><td>1.62e-03</td><td>2.22e-02</td><td>2.22e-02</td><td>0.03s</td></tr>
+      <tr><td>Xorshift64</td><td>100,000</td><td>0.231745</td><td>5.78e-04</td><td>2.25e-02</td><td>2.25e-02</td><td>0.27s</td></tr>
+      <tr><td>Xorshift64</td><td>1,000,000</td><td>0.232465</td><td>1.43e-04</td><td>2.26e-02</td><td>2.26e-02</td><td>2.81s</td></tr>
+      <tr><td>Xorshift128</td><td>10,000</td><td>0.232701</td><td>3.78e-04</td><td>2.24e-02</td><td>2.24e-02</td><td>0.03s</td></tr>
+      <tr><td>Xorshift128</td><td>100,000</td><td>0.232442</td><td>1.19e-04</td><td>2.25e-02</td><td>2.25e-02</td><td>0.31s</td></tr>
+      <tr><td>Xorshift128</td><td>1,000,000</td><td>0.232196</td><td>1.27e-04</td><td>2.26e-02</td><td>2.26e-02</td><td>2.83s</td></tr>
+      <tr><td>Xoshiro128</td><td>10,000</td><td>0.232263</td><td>5.96e-05</td><td>2.26e-02</td><td>2.26e-02</td><td>0.04s</td></tr>
+      <tr><td>Xoshiro128</td><td>100,000</td><td>0.231895</td><td>4.27e-04</td><td>2.25e-02</td><td>2.25e-02</td><td>0.39s</td></tr>
+      <tr><td>Xoshiro128</td><td>1,000,000</td><td>0.232328</td><td>5.41e-06</td><td>2.26e-02</td><td>2.26e-02</td><td>3.90s</td></tr>
     </tbody>
   </table>
   <figcaption>Resultados para d = 5</figcaption>
@@ -331,151 +334,31 @@ En lo que respecta a las simulaciones, utilizaremos las siguientes semillas obte
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>LCG</td>
-        <td>10,000</td>
-        <td>0.054575</td>
-        <td>6.01e-04</td>
-        <td>2.96e-03</td>
-        <td>6.57e-07</td>
-        <td>0.05s</td>
-      </tr>
-      <tr>
-        <td>LCG</td>
-        <td>100,000</td>
-        <td>0.054014</td>
-        <td>4.05e-05</td>
-        <td>2.93e-03</td>
-        <td>3.09e-08</td>
-        <td>0.47s</td>
-      </tr>
-      <tr>
-        <td>LCG</td>
-        <td>1,000,000</td>
-        <td>0.053958</td>
-        <td>1.61e-05</td>
-        <td>2.95e-03</td>
-        <td>3.21e-09</td>
-        <td>4.75s</td>
-      </tr>
-      <tr>
-        <td>Xorshift32</td>
-        <td>10,000</td>
-        <td>0.054059</td>
-        <td>8.49e-05</td>
-        <td>3.02e-03</td>
-        <td>3.10e-07</td>
-        <td>0.07s</td>
-      </tr>
-      <tr>
-        <td>Xorshift32</td>
-        <td>100,000</td>
-        <td>0.054109</td>
-        <td>1.35e-04</td>
-        <td>2.97e-03</td>
-        <td>4.79e-08</td>
-        <td>0.67s</td>
-      </tr>
-      <tr>
-        <td>Xorshift32</td>
-        <td>1,000,000</td>
-        <td>0.054091</td>
-        <td>1.17e-04</td>
-        <td>2.96e-03</td>
-        <td>1.67e-08</td>
-        <td>6.57s</td>
-      </tr>
-      <tr>
-        <td>Xorshift64</td>
-        <td>10,000</td>
-        <td>0.054309</td>
-        <td>3.35e-04</td>
-        <td>3.08e-03</td>
-        <td>4.20e-07</td>
-        <td>0.09s</td>
-      </tr>
-      <tr>
-        <td>Xorshift64</td>
-        <td>100,000</td>
-        <td>0.053948</td>
-        <td>2.62e-05</td>
-        <td>2.93e-03</td>
-        <td>3.00e-08</td>
-        <td>0.88s</td>
-      </tr>
-      <tr>
-        <td>Xorshift64</td>
-        <td>1,000,000</td>
-        <td>0.053902</td>
-        <td>7.22e-05</td>
-        <td>2.94e-03</td>
-        <td>8.16e-09</td>
-        <td>8.96s</td>
-      </tr>
-      <tr>
-        <td>Xorshift128</td>
-        <td>10,000</td>
-        <td>0.053989</td>
-        <td>1.54e-05</td>
-        <td>2.88e-03</td>
-        <td>2.88e-07</td>
-        <td>0.09s</td>
-      </tr>
-      <tr>
-        <td>Xorshift128</td>
-        <td>100,000</td>
-        <td>0.053876</td>
-        <td>9.78e-05</td>
-        <td>2.91e-03</td>
-        <td>3.86e-08</td>
-        <td>0.91s</td>
-      </tr>
-      <tr>
-        <td>Xorshift128</td>
-        <td>1,000,000</td>
-        <td>0.053990</td>
-        <td>1.61e-05</td>
-        <td>2.94e-03</td>
-        <td>3.20e-09</td>
-        <td>9.35s</td>
-      </tr>
-      <tr>
-        <td>Xoshiro128</td>
-        <td>10,000</td>
-        <td>0.054081</td>
-        <td>1.07e-04</td>
-        <td>2.83e-03</td>
-        <td>2.95e-07</td>
-        <td>0.13s</td>
-      </tr>
-      <tr>
-        <td>Xoshiro128</td>
-        <td>100,000</td>
-        <td>0.053928</td>
-        <td>4.59e-05</td>
-        <td>2.94e-03</td>
-        <td>3.16e-08</td>
-        <td>1.26s</td>
-      </tr>
-      <tr>
-        <td>Xoshiro128</td>
-        <td>1,000,000</td>
-        <td>0.053998</td>
-        <td>2.45e-05</td>
-        <td>2.95e-03</td>
-        <td>3.55e-09</td>
-        <td>13.06s</td>
-      </tr>
+      <tr><td>LCG</td><td>10,000</td><td>0.054575</td><td>6.01e-04</td><td>2.96e-03</td><td>2.96e-03</td><td>0.03s</td></tr>
+      <tr><td>LCG</td><td>100,000</td><td>0.054014</td><td>4.05e-05</td><td>2.93e-03</td><td>2.93e-03</td><td>0.29s</td></tr>
+      <tr><td>LCG</td><td>1,000,000</td><td>0.053958</td><td>1.61e-05</td><td>2.95e-03</td><td>2.95e-03</td><td>2.83s</td></tr>
+      <tr><td>Xorshift32</td><td>10,000</td><td>0.054059</td><td>8.49e-05</td><td>3.02e-03</td><td>3.02e-03</td><td>0.04s</td></tr>
+      <tr><td>Xorshift32</td><td>100,000</td><td>0.054109</td><td>1.35e-04</td><td>2.97e-03</td><td>2.97e-03</td><td>0.38s</td></tr>
+      <tr><td>Xorshift32</td><td>1,000,000</td><td>0.054091</td><td>1.17e-04</td><td>2.96e-03</td><td>2.96e-03</td><td>3.78s</td></tr>
+      <tr><td>Xorshift64</td><td>10,000</td><td>0.054309</td><td>3.35e-04</td><td>3.08e-03</td><td>3.08e-03</td><td>0.05s</td></tr>
+      <tr><td>Xorshift64</td><td>100,000</td><td>0.053948</td><td>2.62e-05</td><td>2.93e-03</td><td>2.93e-03</td><td>0.50s</td></tr>
+      <tr><td>Xorshift64</td><td>1,000,000</td><td>0.053902</td><td>7.22e-05</td><td>2.94e-03</td><td>2.94e-03</td><td>5.00s</td></tr>
+      <tr><td>Xorshift128</td><td>10,000</td><td>0.053989</td><td>1.54e-05</td><td>2.88e-03</td><td>2.88e-03</td><td>0.05s</td></tr>
+      <tr><td>Xorshift128</td><td>100,000</td><td>0.053876</td><td>9.78e-05</td><td>2.91e-03</td><td>2.91e-03</td><td>0.52s</td></tr>
+      <tr><td>Xorshift128</td><td>1,000,000</td><td>0.053990</td><td>1.61e-05</td><td>2.94e-03</td><td>2.94e-03</td><td>5.29s</td></tr>
+      <tr><td>Xoshiro128</td><td>10,000</td><td>0.054081</td><td>1.07e-04</td><td>2.83e-03</td><td>2.83e-03</td><td>0.08s</td></tr>
+      <tr><td>Xoshiro128</td><td>100,000</td><td>0.053928</td><td>4.59e-05</td><td>2.94e-03</td><td>2.94e-03</td><td>0.77s</td></tr>
+      <tr><td>Xoshiro128</td><td>1,000,000</td><td>0.053998</td><td>2.45e-05</td><td>2.95e-03</td><td>2.95e-03</td><td>7.50s</td></tr>
     </tbody>
   </table>
   <figcaption>Resultados para d = 10</figcaption>
 </figure>
 
-<h3 style="color: #DAA520;">4.6. Costos</h3>
+<h3 style="color: #DAA520;">4.3. Costos</h3>
 
 <p>Definimos el <i>costo</i> de un generador en función del producto entre el Error Cuadrático Medio y el Tiempo de Simulación.</p>
 
-<p>Tomando el caso de estudio más grande (N = 10<sup>6</sup>, d = 10), realizamos la siguiente gráfica:</p>
+<p>Tomando el caso de estudio más grande (N = 10<sup>6</sup>, d = 10), promediamos 100 simulaciones Monte Carlo para realizar siguiente gráfica:</p>
 
 <img src="Imagenes/GraficaCostos.png" alt="Gráfica de Costos para N=1,000,000 y d = 10" style="width:100%;">
 
@@ -564,37 +447,83 @@ Resulta interesante ver como los puntos generados por <code>xorshift32</code> es
 Se generaron 1 millón de triplas del tipo (y<sub>i</sub>, y<sub>i+1</sub>, y<sub>i+2</sub>) para cada generador normalizado en el intervalo [0,1). La motivación detrás de las gráficas era detectar algún patrón visible que puediera revelar sesgos o correlaciones no deseadas en la secuencia de números generados.
 </p>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: auto;">
-  <img src="Imagenes/Distribucion3DLCG.png" alt="Distribución de a triplas LCG" style="width: 100%;">
-  <img src="Imagenes/Distribucion3DXorshift32.png" alt="Distribución de a triplas Xorshift32" style="width: 100%;">
-  <img src="Imagenes/Distribucion3DXorshift64.png" alt="Distribución de a triplas Xorshift64" style="width: 100%;">
-  <img src="Imagenes/Distribucion3DXorshift128.png" alt="Distribución de a triplas Xorshift128 style="width: 100%;">
-</div>
-<div style="width: 50%; margin: 20px auto 0 auto;">
-  <img src="Imagenes/Distribucion3DXoshiro128.png" alt="Distribución de a triplas Xoshiro128++" style="width: 100%;">
+<div style="
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+">
+
+  <img src="Imagenes/Distribucion3DLCG.png" alt="Distribución de a triplas LCG" style="width: 90%;">
+  <img src="Imagenes/Distribucion3DXorshift32.png" alt="Distribución de a triplas Xorshift32" style="width: 90%;">
+  <img src="Imagenes/Distribucion3DXorshift64.png" alt="Distribución de a triplas Xorshift64" style="width: 90%;">
+  <img src="Imagenes/Distribucion3DXorshift128.png" alt="Distribución de a triplas Xorshift128" style="width: 90%;">
+  <img src="Imagenes/Distribucion3DXoshiro128.png" alt="Distribución de a triplas Xoshiro128++" style="width: 90%;">
+
 </div>
 
 <p>
 Por lo visto en las gráficas, todos los generadores logran estimar adecuadamente el volumen del cubo unitario. Además, existe la posibilidad de interactuar con estas visualizaciones en el <a href="#codigo">código</a> pudiendo modificar el punto de vista y la cantidad de puntos generados.
 </p>
 
+<h3 style="color: #DAA520;">5.3 Tests de Bondad de Ajuste Chi-cuadrado</h3>
+
+La idea de esta batería de tests fue ver el nivel de confianza alcanzado cuando se simula una muestra proveniente de una distribución discreta con cada uno de los generadores.
+Para cada distribución, el nivel de confianza está dado por la estimación del p-valor obtenido en una cantidad de simulaciones del test de hipótesis chi-cuadrado de Pearson bajo la hipótesis nula de que la muestra generada proviene de tal distribución. Se consideraron las siguientes distribuciones de las cuales se tienen implementaciones en el apunte de la materia:
+- Uniforme Discreta {1,10}
+- Bernoulli (0.5)
+- Binomial (3, 0.5)
+- Poisson(4)
+- Geométrica(0.5)
+
+En esta versión, se repitió 100 veces el test completo por distribución y se reporta el promedio de los 100 p-valores obtenidos, lo cual permite una estimación más estable del nivel de confianza asociado a cada generador.
+Para cada simulación, la muestra generada para calcular el estadístico t<sub>i</sub> se obtuvo en base al generador de números pseudoaleatorios de la librería `random` de Python, el cual consideramos adecuado debido a sus <a href="#ref5">buenas propiedades estadísticas</a>.
+
+<img src="Imagenes/SimulacionDistribucionesDiscretas.png" alt="p-valores Distribuciones Discretas">
+
+> *En cada caso, se generaron muestras de tamaño 800 y se realizaron 1250 simulaciones*
+
+<h3 style="color: #DAA520;">5.4 Tests de Bondad de Ajuste Kolmogorov-Smirnov</h3>
+
+Similar a la batería de tests anterior, la motivación fue medir el nivel de confianza alcanzado cuando se simula una muestra proveniente de una distribución continua con cada uno de los generadores.
+Para cada distribución, el nivel de confianza está dado por la estimación del p-valor obtenido en una cantidad de simulaciones del test de hipótesis Kolmogorov-Smirnov bajo la hipótesis nula de que la muestra generada proviene de tal distribución. Se consideraron las siguientes distribuciones de las cuales se tienen implementaciones en el apunte de la materia o bien fueron programadas en algún ejercicio:
+- Uniforme (continua) (1,10)
+- Normal Estándar (0,1)
+- Exponencial (4)
+- Gamma (4,2)
+- Weibull (4,2)
+
+En esta versión, también se repitió 100 veces el test completo por distribución y se reporta el promedio de los 100 p-valores obtenidos para poder tener una estimación más estable. A diferencia del test anterior, decidimos tener un mayor tamaño de muestra que de simulaciones para ver si esa elección de parámetros tenía correlaciones con los resultados; sin embargo, no parece ser el caso.
+Para cada simulación, la muestra generada para calcular el estadístico d<sub>i</sub> se obtuvo en base al generador de números pseudoaleatorios de la librería `numpy.random` de Python (<a href="#ref6">PCG64</a>) y está probado que tiene una alta calidad estadística.
+
+<img src="Imagenes/SimulacionesDistribucionesContinuas.png" alt="p-valores Distribuciones Continuas">
+
+> *En cada caso, se generaron muestras de tamaño 5000 y se realizaron 200 simulaciones*
+
 <hr>
 
 <h2 style="color: #DAA520;">6. Conclusiones</h2>
 
-<p> Del punto anterior, se concluye que: </p>
+<p> De los dos puntos anteriores, se concluye que: </p>
 
 <ul>
-  <li>Generalmente, a medida que la dimensión y el tamaño de la muestra aumentan, las estimaciones tienden a ser más precias, ya que el error disminuye, mientras que la varianza se mantiene relativamente estable. Esto sucede porque al generar una mayor cantidad de valores, se puede observar que las distribuciones de los generadores se aproximan mejor a una distribución uniforme, especialmente cuando el tamaño de la muestra es lo suficientemente grande.</li>
+  <li>Generalmente, a medida que la dimensión y el tamaño de la muestra aumentan, las estimaciones tienden a ser más precias, ya que el error absoluto disminuye, mientras que la varianza se mantiene relativamente estable. Esto sucede porque al generar una mayor cantidad de valores, se puede observar que las distribuciones de los generadores se aproximan mejor a una distribución uniforme, especialmente cuando el tamaño de la muestra es lo suficientemente grande. También se puede apreciar en las tablas, como la varianza y el error cuadrático medio son idénticos, lo cual refuerza el hecho de que la media muestral es un estimador insesgado de la integral.</li>
+  <li>Para los 5 generadores estudiados, el análisis de costos nos dice que: si es más prioritaria la velocidad que la calidad estadística, genradores como el <code>congruencial lineal</code> o <code>xorshift32</code> son las mejores opciones; si por otro lado, interesa más la calidad de los valores generados, siempre conviene utilizar <code>xorshift128+</code> antes que <code>xoshiro128++</code> ya que el primero puede llegar a conseguir casi la misma precisión y en un menor tiempo; por último, se concluye que <code>xorshift64</code> no tiene muy buenas aplicaciones prácticas ya que los dos primeros generadores consiguen resultados más precisos en menor cantidad de tiempo.
+  <li>Todos los generadores son repetibles y su velocidad computacional esta fuertemente ligada a la complejidad de su fórmula. En cuanto a protabilidad se refiere, no utilizamos ninguna función o librería específica de Python para la implementación de los generadores, ni tampoco tenemos dependecia de alguna arquitectura en específico, por lo que nuestras implementaciones de los generadores de números pseudoaleatorios son fácilmente replicables en cualquier otro lenguaje que soporte operaciones lógicas como xor, and, or, etc. Incluso, a diferencia de Python, la gran mayoría de lenguajes tienen límites estrictos para el tamaño de los números enteros, lo cual haría que no fueran necesarias las máscaras y se podría incluso mejorar la eficiencia.</li>
   <li>El periódo de un generador no influye tanto en la distribución, i.e. periodos grandes no garantizan alta aleatoriedad. Sin embargo, los generadores con los mayores periodos demuestran ser más efectivos para criptografía, ya que se hace computacionalmente inviable el poder detectar patrones.</li>
-  <li>Para los 5 generadores estudiados, el análisis de costos nos dice que: si es más prioritaria la velocidad que la calidad estadística, el <code>generador congruencial lineal</code> es la mejor opción; si por otro lado, interesa más la calidad de los valores generados, siempre conviene utilizar <code>xorshift128+</code> antes que <code>xoshiro128++</code> ya que el primero puede llegar a conseguir la misma precisión o incluso una mejor que la del segundo y en mucho menos tiempo; y si necesitamos un generador más general <code>xorshift64</code> y sobre todo <code>xorshift32</code> son buenas opciones.</li>
+  <li>Al momento de simular muestras de variables aleatorias discretas, todos los generadores tuvieron estadísticos muy altos para la distribución geométrica y uniforme que hicieron que el p-valor tendiese a 0. Confiamos en que las implementaciones, tanto de los generadores como de las distribuciones están bien realizadas, por lo que le atribuímos el bajo grado de confianza a la sensibilidad del test y/o a problemas en la discretización o agrupamiento de las clases. Para las demás distribuciones, no hay evidencias signficativas de que un generador sea mejor que otro para alguna distribución en concreto; sin embargo, se llegan a alcanzar diferencias del 10% más de confianza para las distribuciones Binomial y de Poisson entre algunos generadores</li>
+  <li>En cuanto a la simulaciones de muestras de variables aleatorias continuas, si bien también se pueden llegar a presentar diferencias del 10% de confianza entre generadores para la distribución exponencial, sobre todo si comparamos contra <code>xoshiro128++</code> que parece ser el que peor la simula. Atribuímos las similitudes de las estimaciones de los p-valores para el resto de distribuciones a la menor sensibilidad (respecto al test chi-cuadrado) que presenta el test de Kolmogorov-Smirnov.</li>
 </ul>
 
 <hr>
 
-<h2 style="color: #DAA520;", id="codigo">7. Código fuente</h2>
+<h2 style="color: #DAA520;", id="codigo">7. Código Fuente</h2>
 
-<p>El código completo de simulación y generación de gráficos se incluye en el archivo <code>simulacion.ipynb</code> adjunto.</p>
+<p>El código completo de simulación y generación de gráficos se incluye en el archivo <code>Trabajo_Especial_D.ipynb</code> adjunto.</p>
 
 <hr>
 
@@ -619,6 +548,10 @@ Por lo visto en las gráficas, todos los generadores logran estimar adecuadament
 <li id="ref5">
   Matsumoto, M., & Nishimura, T. (1998). ACM Transactions on Modeling and Computer Simulation.
   <a href="https://dl.acm.org/doi/10.1145/272991.272995" target="_blank">[Link]</a>
+</li>
+<li id="ref6">
+  O’Neill, M. E. (2014). PCG: A Family of Simple Fast Space‑Efficient Statistically Good Algorithms for Random Number Generation. Harvey Mudd College Technical Report.
+  <a href="https://www.pcg-random.org/pdf/toms-oneill-pcg-family-v1.02.pdf" target="_blank">[Link]</a>
 </li>
 </ol>
 
